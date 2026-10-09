@@ -15,11 +15,6 @@ export class TodoPage {
     await this.todoInput.press('Enter');
   }
 
-  async checkFirstTodoItem() {
-    await this.checkbox.check();
-    await expect(this.checkbox).toBeChecked();
-  }
-
   getTodoItem(todo) {
   return this.page.getByText(todo);
   }

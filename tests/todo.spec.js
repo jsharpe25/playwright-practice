@@ -1,22 +1,17 @@
 import { test, expect } from '@playwright/test';
+import { TodoPage } from '../pages/todoPage';
 
-test('add a todo item', async ({ page }) => {
-  await page.goto('https://demo.playwright.dev/todomvc/');
+test('add and complete todo items', async ({ page }) => {
+  const todoPage = new TodoPage(page);
 
-  const todoInput = page.getByPlaceholder('What needs to be done?');
+  await todoPage.open();
 
-  await todoInput.fill('Learn Playwright');
-  await todoInput.press('Enter');
-  const firstTodoItem = page.getByText('Learn Playwright');
-  await expect(firstTodoItem).toBeVisible();
+  await todoPage.addTodo('Learn Playwright');
+  await expect(todoPage.getTodoItem('Learn Playwright')).toBeVisible();
 
-  const checkbox = page.getByRole('checkbox', { name: 'Toggle Todo' });
-  await checkbox.check();
-  await expect(checkbox).toBeChecked();
+  await todoPage.completeTodo();
+  await expect(todoPage.checkbox).toBeChecked();
 
-  await todoInput.fill('Practice JavaScript');
-  await todoInput.press('Enter');
-  const secondTodoItem = page.getByText('Practice JavaScript');
-  await expect(secondTodoItem).toBeVisible();
-
+  await todoPage.addTodo('Practice JavaScript');
+  await expect(todoPage.getTodoItem('Practice JavaScript')).toBeVisible();
 });
