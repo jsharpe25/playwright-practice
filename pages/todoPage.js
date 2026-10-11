@@ -3,7 +3,6 @@ export class TodoPage {
     this.page = page;
 
     this.todoInput = page.getByPlaceholder('What needs to be done?');
-    this.checkbox = page.getByRole('checkbox', { name: 'Toggle Todo' });
   }
 
   async open() {
@@ -19,7 +18,14 @@ export class TodoPage {
   return this.page.getByText(todo);
   }
 
-  async completeTodo() {
-  await this.checkbox.check();
+  getTodoCheckbox(todo) {
+  return this.page
+    .getByRole('listitem')
+    .filter({ hasText: todo })
+    .getByRole('checkbox');
+}
+
+  async completeTodo(todo) {
+  await this.getTodoCheckbox(todo).check();
   }
 }
