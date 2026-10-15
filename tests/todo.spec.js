@@ -3,35 +3,39 @@ import { TodoPage } from '../pages/todoPage';
 
 let todoPage;
 
-test.beforeEach(async ({ page }) => {
-  todoPage = new TodoPage(page);
-  await todoPage.open();
-});
+test.describe('Todo Tests', () => {
 
-test('add a todo', async () => {
-  const todo = 'Learn Playwright';
+  test.beforeEach(async ({ page }) => {
+    todoPage = new TodoPage(page);
+    await todoPage.open();
+  });
 
-  await todoPage.addTodo(todo);
+  test('add a todo', async () => {
+    const todo = 'Learn Playwright';
 
-  await expect(todoPage.getTodoItem(todo)).toBeVisible();
-});
+    await todoPage.addTodo(todo);
 
-test('complete a todo', async () => {
-  const todo = 'Learn Playwright';
+    await expect(todoPage.getTodoItem(todo)).toBeVisible();
+  });
 
-  await todoPage.addTodo(todo);
-  await todoPage.completeTodo(todo);
+  test('complete a todo', async () => {
+    const todo = 'Learn Playwright';
 
-  await expect(todoPage.getTodoCheckbox(todo)).toBeChecked();
-});
+    await todoPage.addTodo(todo);
+    await todoPage.completeTodo(todo);
 
-test('add multiple todos', async () => {
-  const firstTodo = 'Learn Playwright';
-  const secondTodo = 'Practice JavaScript';
+    await expect(todoPage.getTodoCheckbox(todo)).toBeChecked();
+  });
 
-  await todoPage.addTodo(firstTodo);
-  await todoPage.addTodo(secondTodo);
+  test('add multiple todos', async () => {
+    const firstTodo = 'Learn Playwright';
+    const secondTodo = 'Practice JavaScript';
 
-  await expect(todoPage.getTodoItem(firstTodo)).toBeVisible();
-  await expect(todoPage.getTodoItem(secondTodo)).toBeVisible();
+    await todoPage.addTodo(firstTodo);
+    await todoPage.addTodo(secondTodo);
+
+    await expect(todoPage.getTodoItem(firstTodo)).toBeVisible();
+    await expect(todoPage.getTodoItem(secondTodo)).toBeVisible();
+  });
+
 });
