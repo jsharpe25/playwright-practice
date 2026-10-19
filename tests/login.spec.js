@@ -1,8 +1,10 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/loginPage.js';
+import { InventoryPage } from '../pages/inventoryPage.js';
 
 test('successful login', async ({ page }) => {
   const loginPage = new LoginPage(page);
+  const inventoryPage = new InventoryPage(page);
 
   await loginPage.open();
   await loginPage.login(
@@ -11,4 +13,5 @@ test('successful login', async ({ page }) => {
   );
 
   await expect(page).toHaveURL(/inventory/);
+  await expect(inventoryPage.title).toHaveText('Products');
 });
