@@ -9,7 +9,7 @@ test('successful login', async ({ page }) => {
   await loginPage.open();
   await loginPage.login(
     process.env.SAUCE_USERNAME,
-    process.env.SAUCE_PASSWORD
+    process.env.SAUCE_PASSWORD,
   );
 
   await expect(page).toHaveURL(/inventory/);
