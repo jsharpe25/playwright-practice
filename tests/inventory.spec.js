@@ -29,4 +29,12 @@ test.describe("Inventory Tests", () => {
 
     await expect(inventoryPage.cartBadge).toBeHidden();
   });
+
+  test('every product card has a price', async () => {
+  const productCards = await inventoryPage.productCards.all();
+
+  for (const productCard of productCards) {
+    await expect(inventoryPage.getProductPrice(productCard)).toBeVisible();
+  }
+  });
 });
