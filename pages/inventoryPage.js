@@ -20,6 +20,10 @@ export class InventoryPage {
     );
   }
 
+  async open() {
+    await this.page.goto("/inventory.html");
+  }
+
   async addBackpackToCart() {
     await this.backpackAddToCartButton.click();
   }

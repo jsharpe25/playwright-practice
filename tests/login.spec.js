@@ -1,11 +1,7 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/loginPage.js';
-import { InventoryPage } from '../pages/inventoryPage.js';
+import { expect } from "@playwright/test";
+import { test } from "../fixtures/pages.fixture.js";
 
-test('successful login', async ({ page }) => {
-  const loginPage = new LoginPage(page);
-  const inventoryPage = new InventoryPage(page);
-
+test('successful login', async ({ page, loginPage, inventoryPage }) => {
   await loginPage.open();
   await loginPage.login(
     process.env.SAUCE_USERNAME,

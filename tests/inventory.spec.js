@@ -1,40 +1,29 @@
-import { test, expect } from "@playwright/test";
-import { LoginPage } from "../pages/loginPage.js";
-import { InventoryPage } from "../pages/inventoryPage.js";
-
-let loginPage;
-let inventoryPage;
+import { expect } from "@playwright/test";
+import { test } from "../fixtures/pages.fixture.js";
 
 test.describe("Inventory Tests", () => {
-  test.beforeEach(async ({ page }) => {
-    loginPage = new LoginPage(page);
-    inventoryPage = new InventoryPage(page);
-
-    await loginPage.open();
-    await loginPage.login(
-      process.env.SAUCE_USERNAME,
-      process.env.SAUCE_PASSWORD,
-    );
+  test.beforeEach(async ({ inventoryPage }) => {
+    await inventoryPage.open();
   });
 
-  test("add backpack to cart", async () => {
+  test("add backpack to cart", async ({ inventoryPage }) => {
     await inventoryPage.addBackpackToCart();
 
     await expect(inventoryPage.cartBadge).toHaveText("1");
   });
 
-  test("remove backpack from cart", async () => {
+  test("remove backpack from cart", async ({ inventoryPage }) => {
     await inventoryPage.addBackpackToCart();
     await inventoryPage.removeBackpackFromCart();
 
     await expect(inventoryPage.cartBadge).toBeHidden();
   });
 
-  test('every product card has a price', async () => {
-  const productCards = await inventoryPage.productCards.all();
+  test("every product card has a price", async ({ inventoryPage }) => {
+    const productCards = await inventoryPage.productCards.all();
 
-  for (const productCard of productCards) {
-    await expect(inventoryPage.getProductPrice(productCard)).toBeVisible();
-  }
+    for (const productCard of productCards) {
+      await expect(inventoryPage.getProductPrice(productCard)).toBeVisible();
+    }
   });
 });
